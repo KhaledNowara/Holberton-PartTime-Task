@@ -14,6 +14,7 @@ int _printf(const char *format, ...)
     int width = 0;
     int left_justified = 1;
     int zero_fill = 0;
+    int printed_chars = 0;
 
     va_start(args, format);
 
@@ -81,6 +82,8 @@ int _printf(const char *format, ...)
                 print_hex_small(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             default:
+                /*offset for the %*/
+                printed_chars++;
                 add_to_buffer('%');
                 add_to_buffer(*format);
                 break;
@@ -91,9 +94,12 @@ int _printf(const char *format, ...)
 
             add_to_buffer(*format);
         }
+        printed_chars++;
         format++;
     }
     va_end(args);
     flush_buffer();
-    return (0);
+    /* should handle the old return types for the functions but I probably wont*/
+    
+    return (printed_chars);
 }
