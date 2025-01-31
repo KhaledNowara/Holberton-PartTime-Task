@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
+
 /*printing buffer size*/
 #define BUFFER_SIZE 1024
 

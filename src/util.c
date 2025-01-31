@@ -51,7 +51,7 @@ int print_char(char c)
 {
     if (c < 32 || c > 126)
     {
-        printf("%x\n", c);
+        
         add_to_buffer('\\');
         add_to_buffer('x');
         print_hex_capital(c, NONE, 0, 1, 1);
