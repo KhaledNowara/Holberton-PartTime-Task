@@ -30,12 +30,13 @@ int _printf(const char *format, ...);
 
 int print_char (char c);
 int print_string (char *str);
-int print_int (long int n, len_modifier modifier);
-int print_binary (unsigned long int n, len_modifier modifier);
-int print_unsigned_int (unsigned long int d, len_modifier modifier);
-int print_octal (unsigned long int n, len_modifier modifier);
-int print_hex_small (unsigned long int n, len_modifier modifier);
-int print_hex_capital (unsigned long int n, len_modifier modifier);
+int print_int (long int n, len_modifier modifier, int width, int zero_fill,int left_justified);
+int print_binary (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
+int print_unsigned_int (unsigned long int d, len_modifier modifier,int width, int zero_fill,int left_justified);
+int print_octal (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
+int print_hex_small (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
+int print_hex_capital (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
+
 int add_to_buffer(char c);
 int flush_buffer();
 

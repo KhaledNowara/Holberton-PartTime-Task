@@ -13,6 +13,41 @@ Tasks 9-11
 */
 
 /* handle %c  print a character*/
+
+int reverse_and_pad(char *reverse_buffer, int i, int width, int zero_fill, int left_justified)
+{
+    int j = i;
+    if (left_justified)
+    {
+        while (j < width)
+        {
+            if (zero_fill)
+            {
+                add_to_buffer('0');
+            }
+            else
+            {
+                add_to_buffer(' ');
+            }
+            j++;
+        }
+    }
+    while (i > 0)
+    {
+        add_to_buffer(reverse_buffer[--i]);
+    }
+    if (!left_justified)
+    {
+        while (j < width)
+        {
+            add_to_buffer(' ');
+            j++;
+        }
+    }
+    return (0);
+}
+
+
 int print_char(char c)
 {
     if (c < 32 || c > 126)
@@ -20,7 +55,7 @@ int print_char(char c)
 
         add_to_buffer('\\');
         add_to_buffer('x');
-        print_hex_small(c, NONE);
+        print_hex_small(c, NONE,0,1,1);
     }
     else
     {
@@ -43,7 +78,7 @@ int print_string(char *str)
 }
 
 /*handle %i %d print a signed integer*/
-int print_int(long int n, len_modifier modifier)
+int print_int(long int n, len_modifier modifier, int width, int zero_fill,int left_justified)
 {
     int buffer_size = INT_MAX_DIGITS;
 
@@ -90,16 +125,13 @@ int print_int(long int n, len_modifier modifier)
             reverse_buffer[i++] = n % 10 + '0';
             n = n / 10;
         }
-
-        while (i >= 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+      
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, 1);
     }
 }
 
 /*handle %b print a binary unsigned int*/
-int print_binary(unsigned long int n, len_modifier modifier)
+int print_binary(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
 
 {
     int buffer_size = UINT_BIN_MAX_DIGITS;
@@ -136,15 +168,12 @@ int print_binary(unsigned long int n, len_modifier modifier)
             reverse_buffer[i++] = n % 2 + '0';
             n = n / 2;
         }
-        while (i > 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
     }
 }
 
 /*handle %u print unsigned int*/
-int print_unsigned_int(unsigned long int n, len_modifier modifier)
+int print_unsigned_int(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
 {
     int buffer_size = INT_MAX_DIGITS;
     switch(modifier){
@@ -185,16 +214,13 @@ int print_unsigned_int(unsigned long int n, len_modifier modifier)
             n = n / 10;
         }
 
-        while (i >= 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
     }
 }
 
 /*handle %o print octal unsigned int*/
 /* I am not sure why I am assuming %o is unsigned but the its consistent with printf*/
-int print_octal(unsigned long int n, len_modifier modifier)
+int print_octal(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
 {
     int buffer_size = UINT_OCT_MAX_DIGITS;
     switch(modifier){
@@ -227,10 +253,7 @@ int print_octal(unsigned long int n, len_modifier modifier)
             reverse_buffer[i++] = n % 8 + '0';
             n = n / 8;
         }
-        while (i > 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
     }
     return (0);
 }
@@ -238,7 +261,7 @@ int print_octal(unsigned long int n, len_modifier modifier)
 /*handle %x print hexadecimal unsigned int*/
 /*Same signing issue*/
 
-int print_hex_small(unsigned long int n,len_modifier modifier)
+int print_hex_small(unsigned long int n,len_modifier modifier,int width, int zero_fill,int left_justified)
 
 {
     int buffer_size = UINT_HEX_MAX_DIGITS;
@@ -280,16 +303,14 @@ int print_hex_small(unsigned long int n,len_modifier modifier)
             }
             n = n / 16;
         }
-        while (i > 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
     }
+
     return (0);
 }
 
 /*handle %X print hexadecimal unsigned int*/
-int print_hex_capital(unsigned long int n, len_modifier modifier)
+int print_hex_capital(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
 
 {
     int buffer_size = UINT_HEX_MAX_DIGITS;
@@ -331,10 +352,7 @@ int print_hex_capital(unsigned long int n, len_modifier modifier)
             }
             n = n / 16;
         }
-        while (i > 0)
-        {
-            add_to_buffer(reverse_buffer[--i]);
-        }
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
     }
     return (0);
 }

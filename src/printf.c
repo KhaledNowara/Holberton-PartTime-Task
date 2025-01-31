@@ -19,7 +19,11 @@ int _printf(const char *format, ...)
         if (*format == '%')
         {
             format++;
+            //  handle length and width modifiers
             len_modifier len_modifier = NONE;
+            int width = 0;
+            int left_justified = 1;
+            int zero_fill = 0;
             if (*format == 'l')
             {
                 len_modifier = L;
@@ -30,10 +34,26 @@ int _printf(const char *format, ...)
                 len_modifier = H;
                 format++;
             }
+            else if (*format == '.' || *format == '0')
+            {
+                zero_fill = 1;
+                format++;
+            }
+            else if (*format == '-')
+            {
+                left_justified = 0;
+                format++;
+            }
+            while (*format >= '0' && *format <= '9')
+            {
+                width = width * 10 + (*format - '0');
+                
+                format++;
+            }
+
+
             switch (*format)
             {
-
-           
 
             case 'c':
 
@@ -44,22 +64,22 @@ int _printf(const char *format, ...)
                 break;
             case 'i':
             case 'd':
-                print_int(va_arg(args, long int), len_modifier);
+                print_int(va_arg(args, long int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'b':
-                print_binary(va_arg(args, long unsigned int), len_modifier);
+                print_binary(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'u':
-                print_unsigned_int(va_arg(args, long unsigned int), len_modifier);
+                print_unsigned_int(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'o':
-                print_octal(va_arg(args, long unsigned int), len_modifier);
+                print_octal(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'x':
-                print_hex_small(va_arg(args, long unsigned int), len_modifier);
+                print_hex_small(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'X':
-                print_hex_small(va_arg(args, long unsigned int), len_modifier);
+                print_hex_small(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             default:
                 add_to_buffer('%');

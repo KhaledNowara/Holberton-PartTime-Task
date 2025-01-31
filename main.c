@@ -10,10 +10,10 @@ int main()
     char *str = "hello " + c;
   int n = - 42949295 ;
 
-      long int l_val = 1234567890;
+      unsigned int l_val = 123490;
     short int s_val = 32767;
     int i_val = 42;
-    printf("Long: %lx, Short: %ho, Int: %d\n", l_val, s_val, i_val);
-    _printf("Long: %lx, Short: %ho, Int: %d\n", l_val, s_val, i_val);
+    printf("Long: %010d, Short: %ho, Int: %d\n", l_val, s_val, i_val);
+    _printf("Long: %010x, Short: %ho, Int: %d\n", l_val, s_val, i_val);
     return (0);
 }
