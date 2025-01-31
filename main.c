@@ -8,7 +8,7 @@ int main()
 
     char c = 172;
     char *str = "hello " + c;
-
-    _printf("%s", str);
+int n = -989098;
+    _printf("%i",n  );
     return (0);
 }

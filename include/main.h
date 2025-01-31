@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1024
+#define INT_MAX_DIGITS 10
 
 int _printf(const char *format, ...);
 
