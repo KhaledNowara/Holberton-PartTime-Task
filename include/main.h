@@ -1,5 +1,6 @@
 
-
+#ifndef MAIN_H
+#define MAIN_H
 /*TODO: Include the libraries here*/
 #include <stdarg.h>
 #include <stdlib.h>
@@ -18,4 +19,6 @@ int print_octal (unsigned int n);
 int print_hex (unsigned int n);
 int add_to_buffer(char c);
 int flush_buffer();
+
+#endif
 
