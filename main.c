@@ -5,6 +5,10 @@
 
 int main()
 {
-    printf("%d", BUFFER_SIZE);
+
+    char c = 172;
+    char *str = "hello " + c;
+
+    _printf("%s", str);
     return (0);
 }

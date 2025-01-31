@@ -16,11 +16,26 @@ Tasks 9-11
 
 /* handle %c  print a character*/
 int print_char (char c){
-    
+    if (c < 32 || c > 126){
+        
+        add_to_buffer('\\');
+        add_to_buffer('x');
+        print_hex(c);
+    } else {
+    add_to_buffer(c);
+    }
+    return (0);
+
 }
 
 /* handle %s  print a string*/
 int print_string (char *str){
+
+    while (*str){
+        printf("str: %c\n", *str);
+        print_char(*str);
+        str++;
+    }
     /*TODO: Handle non printable characters \x + character code*/
 
 }

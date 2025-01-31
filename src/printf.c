@@ -1,5 +1,7 @@
 
 #include "../include/main.h"
+// remove
+#include <stdio.h>
 
 
 
@@ -18,6 +20,7 @@ int _printf(const char *format, ...){
             format++;
             switch (*format){
                 case 'c':
+                    
                     print_char(va_arg(args, int));
                     break;
                 case 's':
@@ -45,10 +48,14 @@ int _printf(const char *format, ...){
                     break;
             }
         } else {
+           
             add_to_buffer(*format);
         }
         format++;
     }
+    va_end(args);
+    flush_buffer();
+
 
 
 }
