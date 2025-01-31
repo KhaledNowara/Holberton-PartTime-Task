@@ -10,6 +10,8 @@
 #define BUFFER_SIZE 1024
 #define INT_MAX_DIGITS 10
 #define UINT_BIN_MAX_DIGITS 32
+#define UINT_OCT_MAX_DIGITS 11
+#define UINT_HEX_MAX_DIGITS 8
 
 int _printf(const char *format, ...);
 
@@ -19,7 +21,8 @@ int print_int (int n);
 int print_binary (unsigned int n);
 int print_unsigned_int (unsigned int d);
 int print_octal (unsigned int n);
-int print_hex (unsigned int n);
+int print_hex_small (unsigned int n);
+int print_hex_capital (unsigned int n);
 int add_to_buffer(char c);
 int flush_buffer();
 

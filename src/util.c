@@ -20,7 +20,7 @@ int print_char(char c)
 
         add_to_buffer('\\');
         add_to_buffer('x');
-        print_hex(c);
+        print_hex_small(c);
     }
     else
     {
@@ -57,7 +57,7 @@ int print_int(int n)
             n = -n;
         }
 
-        /* Max signed int is 2^31, 10 digits
+        /* Max signed int is 2^31 -1, 10 digits
         Add digits to a buffer and reverse the buffer
         */
 
@@ -88,7 +88,7 @@ int print_binary(unsigned int n)
     }
     else
     {
-        // Max unsigned int is 2^32, 32 digits 32 bits for binary
+        // Max unsigned int is 2^32 , 32 digits 32 bits for binary
 
         char reverse_buffer[UINT_BIN_MAX_DIGITS];
         int i = 0;
@@ -109,19 +109,136 @@ int print_binary(unsigned int n)
 }
 
 /*handle %u print unsigned int*/
-int print_unsigned_int(unsigned int d)
+int print_unsigned_int(unsigned int n)
 {
-    return (0);
+   if (n == 0)
+    {
+        add_to_buffer('0');
+    }
+    else
+    {
+
+        /* Max unsigned int is 2^32 -1, 10 digits
+        Add digits to a buffer and reverse the buffer
+        */
+
+        char reverse_buffer[INT_MAX_DIGITS];
+        int i = 0;
+        while (n > 0)
+        {
+            /*
+            + '0' To convert to a char with the correct acsii code
+            */
+            reverse_buffer[i++] = n % 10 + '0';
+            n = n / 10;
+        }
+
+        while (i >= 0)
+        {
+            add_to_buffer(reverse_buffer[--i]);
+        }
+    }
 }
 
 /*handle %o print octal unsigned int*/
 int print_octal(unsigned int n)
 {
+    if (n == 0)
+    {
+        add_to_buffer('0');
+    }
+    else
+    {
+        
+        char reverse_buffer[UINT_OCT_MAX_DIGITS];
+        int i = 0;
+        
+        while (n > 0)
+        {   
+            reverse_buffer[i++] = n % 8 + '0';
+            n = n / 8;
+        }
+        while (i > 0)
+        {
+            add_to_buffer(reverse_buffer[--i]);
+        }
+       
+
+        
+    }
     return (0);
 }
 
 /*handle %x print hexadecimal unsigned int*/
-int print_hex(unsigned int n)
+int print_hex_small(unsigned int n)
 {
+    if (n == 0)
+    {
+        add_to_buffer('0');
+    }
+    else
+    {
+        
+        char reverse_buffer[UINT_HEX_MAX_DIGITS];
+        int i = 0;
+        
+        while (n > 0)
+        {   
+            int remainder = n % 16;
+            if (remainder < 10)
+            {
+                reverse_buffer[i++] = remainder + '0';
+            }
+            else
+            {
+                reverse_buffer[i++] = remainder - 10 + 'a';
+            }
+            n = n / 16;
+        }
+        while (i > 0)
+        {
+            add_to_buffer(reverse_buffer[--i]);
+        }
+       
+
+        
+    }
+    return (0);
+}
+
+/*handle %X print hexadecimal unsigned int*/
+int print_hex_capital(unsigned int n)
+{
+    if (n == 0)
+    {
+        add_to_buffer('0');
+    }
+    else
+    {
+        
+        char reverse_buffer[UINT_HEX_MAX_DIGITS];
+        int i = 0;
+        
+        while (n > 0)
+        {   
+            int remainder = n % 16;
+            if (remainder < 10)
+            {
+                reverse_buffer[i++] = remainder + '0';
+            }
+            else
+            {
+                reverse_buffer[i++] = remainder - 10 + 'A';
+            }
+            n = n / 16;
+        }
+        while (i > 0)
+        {
+            add_to_buffer(reverse_buffer[--i]);
+        }
+       
+
+        
+    }
     return (0);
 }
