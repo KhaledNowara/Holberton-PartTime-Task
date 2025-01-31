@@ -9,6 +9,7 @@
 
 #define BUFFER_SIZE 1024
 #define INT_MAX_DIGITS 10
+#define UINT_BIN_MAX_DIGITS 32
 
 int _printf(const char *format, ...);
 
