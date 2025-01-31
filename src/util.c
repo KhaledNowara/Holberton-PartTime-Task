@@ -15,7 +15,9 @@ Tasks 9-11
 
 
 /* handle %c  print a character*/
-int print_char (char c){}
+int print_char (char c){
+    
+}
 
 /* handle %s  print a string*/
 int print_string (char *str){
@@ -24,20 +26,34 @@ int print_string (char *str){
 }
 
 /*handle %i %d print a signed integer*/
-int print_int (int n){}
+int print_int (int n){
+        return (0);
+
+}
 
 /*handle %b print a binary unsigned int*/
-int print_binary (unsigned int n){}
+int print_binary (unsigned int n){
+    return (0);
+
+}
 
 
 /*handle %u print unsigned int*/
-int print_unsigned_int (unsigned int d){}
+int print_unsigned_int (unsigned int d){
+        return (0);
+
+}
 
 /*handle %o print octal unsigned int*/
-int print_octal (unsigned int n){}
+int print_octal (unsigned int n){
+        return (0);
+
+}
 
 /*handle %x print hexadecimal unsigned int*/
-int print_hex (unsigned int n){}
+int print_hex (unsigned int n){
+    return (0);
+}
 
 
 

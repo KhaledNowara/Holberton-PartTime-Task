@@ -1,7 +1,11 @@
-#ifdef _PRINTF_H
-#define _PRINTF_H
+
 
 /*TODO: Include the libraries here*/
+#include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#define BUFFER_SIZE 1024
 
 int _printf(const char *format, ...);
 
@@ -15,5 +19,3 @@ int print_hex (unsigned int n);
 int add_to_buffer(char c);
 int flush_buffer();
 
-
-#endif

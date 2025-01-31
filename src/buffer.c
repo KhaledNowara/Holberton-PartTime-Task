@@ -1,7 +1,8 @@
-#include "main.h"
+#include "../include/main.h"
 
 /* Handle buffer operations for T6*/
 
+char buffer[BUFFER_SIZE];
 
 /*TODO: Handle print returns, should prob change return type but not sure yet*/
 int flush_buffer(){}
