@@ -20,7 +20,7 @@ int print_char(char c)
 
         add_to_buffer('\\');
         add_to_buffer('x');
-        print_hex_small(c);
+        print_hex_small(c, NONE);
     }
     else
     {
@@ -43,8 +43,27 @@ int print_string(char *str)
 }
 
 /*handle %i %d print a signed integer*/
-int print_int(int n)
+int print_int(long int n, len_modifier modifier)
 {
+    int buffer_size = INT_MAX_DIGITS;
+
+    switch (modifier)
+    {
+    case NONE:
+        (int)n;
+        break;
+    case L:
+        (long int)n;
+        buffer_size = INT_LONG_MAX_DIGITS;
+        break;
+    case H:
+        (short int)n;
+        buffer_size = INT_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
+    }
+
     if (n == 0)
     {
         add_to_buffer('0');
@@ -61,7 +80,7 @@ int print_int(int n)
         Add digits to a buffer and reverse the buffer
         */
 
-        char reverse_buffer[INT_MAX_DIGITS];
+        char reverse_buffer[buffer_size];
         int i = 0;
         while (n > 0)
         {
@@ -80,8 +99,27 @@ int print_int(int n)
 }
 
 /*handle %b print a binary unsigned int*/
-int print_binary(unsigned int n)
+int print_binary(unsigned long int n, len_modifier modifier)
+
 {
+    int buffer_size = UINT_BIN_MAX_DIGITS;
+
+    switch (modifier)
+    {
+    case NONE:
+        (unsigned int)n;
+        break;
+    case L:
+        (unsigned long int)n;
+        buffer_size = UINT_BIN_LONG_MAX_DIGITS;
+        break;
+    case H:
+        (unsigned short int)n;
+        buffer_size = UINT_BIN_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
+    }
     if (n == 0)
     {
         add_to_buffer('0');
@@ -90,11 +128,11 @@ int print_binary(unsigned int n)
     {
         // Max unsigned int is 2^32 , 32 digits 32 bits for binary
 
-        char reverse_buffer[UINT_BIN_MAX_DIGITS];
+        char reverse_buffer[buffer_size];
         int i = 0;
-        
+
         while (n > 0)
-        {   
+        {
             reverse_buffer[i++] = n % 2 + '0';
             n = n / 2;
         }
@@ -102,16 +140,30 @@ int print_binary(unsigned int n)
         {
             add_to_buffer(reverse_buffer[--i]);
         }
-       
-
-        
     }
 }
 
 /*handle %u print unsigned int*/
-int print_unsigned_int(unsigned int n)
+int print_unsigned_int(unsigned long int n, len_modifier modifier)
 {
-   if (n == 0)
+    int buffer_size = INT_MAX_DIGITS;
+    switch(modifier){
+        case NONE:
+            (unsigned int)n;
+            break;
+        case L:
+            (unsigned long int)n;
+            buffer_size = INT_LONG_MAX_DIGITS;
+            break;
+        case H:
+            (unsigned short int)n;
+            buffer_size = INT_SHORT_MAX_DIGITS;
+            break;
+        default:
+            break;
+    }
+
+    if (n == 0)
     {
         add_to_buffer('0');
     }
@@ -122,7 +174,7 @@ int print_unsigned_int(unsigned int n)
         Add digits to a buffer and reverse the buffer
         */
 
-        char reverse_buffer[INT_MAX_DIGITS];
+        char reverse_buffer[buffer_size];
         int i = 0;
         while (n > 0)
         {
@@ -141,20 +193,37 @@ int print_unsigned_int(unsigned int n)
 }
 
 /*handle %o print octal unsigned int*/
-int print_octal(unsigned int n)
+/* I am not sure why I am assuming %o is unsigned but the its consistent with printf*/
+int print_octal(unsigned long int n, len_modifier modifier)
 {
+    int buffer_size = UINT_OCT_MAX_DIGITS;
+    switch(modifier){
+        case NONE:
+            (unsigned int)n;
+            break;
+        case L:
+            (unsigned long int)n;
+            buffer_size = UINT_OCT_LONG_MAX_DIGITS;
+            break;
+        case H:
+            (unsigned short int)n;
+            buffer_size = UINT_OCT_SHORT_MAX_DIGITS;
+            break;
+        default:
+            break;
+    }
     if (n == 0)
     {
         add_to_buffer('0');
     }
     else
     {
-        
-        char reverse_buffer[UINT_OCT_MAX_DIGITS];
+
+        char reverse_buffer[buffer_size];
         int i = 0;
-        
+
         while (n > 0)
-        {   
+        {
             reverse_buffer[i++] = n % 8 + '0';
             n = n / 8;
         }
@@ -162,28 +231,44 @@ int print_octal(unsigned int n)
         {
             add_to_buffer(reverse_buffer[--i]);
         }
-       
-
-        
     }
     return (0);
 }
 
 /*handle %x print hexadecimal unsigned int*/
-int print_hex_small(unsigned int n)
+/*Same signing issue*/
+
+int print_hex_small(unsigned long int n,len_modifier modifier)
+
 {
+    int buffer_size = UINT_HEX_MAX_DIGITS;
+    switch(modifier){
+        case NONE:
+            (unsigned int)n;
+            break;
+        case L:
+            (unsigned long int)n;
+            buffer_size = UINT_HEX_LONG_MAX_DIGITS;
+            break;
+        case H:
+            (unsigned short int)n;
+            buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
+            break;
+        default:
+            break;
+    }
     if (n == 0)
     {
         add_to_buffer('0');
     }
     else
     {
-        
-        char reverse_buffer[UINT_HEX_MAX_DIGITS];
+
+        char reverse_buffer[buffer_size];
         int i = 0;
-        
+
         while (n > 0)
-        {   
+        {
             int remainder = n % 16;
             if (remainder < 10)
             {
@@ -199,28 +284,42 @@ int print_hex_small(unsigned int n)
         {
             add_to_buffer(reverse_buffer[--i]);
         }
-       
-
-        
     }
     return (0);
 }
 
 /*handle %X print hexadecimal unsigned int*/
-int print_hex_capital(unsigned int n)
+int print_hex_capital(unsigned long int n, len_modifier modifier)
+
 {
+    int buffer_size = UINT_HEX_MAX_DIGITS;
+    switch(modifier){
+        case NONE:
+            (unsigned int)n;
+            break;
+        case L:
+            (unsigned long int)n;
+            buffer_size = UINT_HEX_LONG_MAX_DIGITS;
+            break;
+        case H:
+            (unsigned short int)n;
+            buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
+            break;
+        default:
+            break;
+    }
     if (n == 0)
     {
         add_to_buffer('0');
     }
     else
     {
-        
-        char reverse_buffer[UINT_HEX_MAX_DIGITS];
+
+        char reverse_buffer[buffer_size];
         int i = 0;
-        
+
         while (n > 0)
-        {   
+        {
             int remainder = n % 16;
             if (remainder < 10)
             {
@@ -236,9 +335,6 @@ int print_hex_capital(unsigned int n)
         {
             add_to_buffer(reverse_buffer[--i]);
         }
-       
-
-        
     }
     return (0);
 }

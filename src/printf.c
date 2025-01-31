@@ -19,8 +19,22 @@ int _printf(const char *format, ...)
         if (*format == '%')
         {
             format++;
+            len_modifier len_modifier = NONE;
+            if (*format == 'l')
+            {
+                len_modifier = L;
+                format++;
+            }
+            else if (*format == 'h')
+            {
+                len_modifier = H;
+                format++;
+            }
             switch (*format)
             {
+
+           
+
             case 'c':
 
                 print_char(va_arg(args, int));
@@ -30,22 +44,22 @@ int _printf(const char *format, ...)
                 break;
             case 'i':
             case 'd':
-                print_int(va_arg(args, int));
+                print_int(va_arg(args, long int), len_modifier);
                 break;
             case 'b':
-                print_binary(va_arg(args, unsigned int));
+                print_binary(va_arg(args, long unsigned int), len_modifier);
                 break;
             case 'u':
-                print_unsigned_int(va_arg(args, unsigned int));
+                print_unsigned_int(va_arg(args, long unsigned int), len_modifier);
                 break;
             case 'o':
-                print_octal(va_arg(args, unsigned int));
+                print_octal(va_arg(args, long unsigned int), len_modifier);
                 break;
             case 'x':
-                print_hex_small(va_arg(args, unsigned int));
+                print_hex_small(va_arg(args, long unsigned int), len_modifier);
                 break;
             case 'X':
-                print_hex_small(va_arg(args, unsigned int));
+                print_hex_small(va_arg(args, long unsigned int), len_modifier);
                 break;
             default:
                 add_to_buffer('%');
