@@ -1,7 +1,5 @@
 
 #include "../include/main.h"
-// remove
-#include <stdio.h>
 
 /*
  _printf function
@@ -12,6 +10,11 @@ int _printf(const char *format, ...)
 {
 
     va_list args;
+    len_modifier len_modifier = NONE;
+    int width = 0;
+    int left_justified = 1;
+    int zero_fill = 0;
+
     va_start(args, format);
 
     while (*format)
@@ -19,11 +22,8 @@ int _printf(const char *format, ...)
         if (*format == '%')
         {
             format++;
-            //  handle length and width modifiers
-            len_modifier len_modifier = NONE;
-            int width = 0;
-            int left_justified = 1;
-            int zero_fill = 0;
+            /*handle length and width modifiers*/
+
             if (*format == 'l')
             {
                 len_modifier = L;
@@ -47,10 +47,9 @@ int _printf(const char *format, ...)
             while (*format >= '0' && *format <= '9')
             {
                 width = width * 10 + (*format - '0');
-                
+
                 format++;
             }
-
 
             switch (*format)
             {
@@ -96,4 +95,5 @@ int _printf(const char *format, ...)
     }
     va_end(args);
     flush_buffer();
+    return (0);
 }

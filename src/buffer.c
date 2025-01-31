@@ -22,20 +22,21 @@ int add_to_buffer(char c){
         flush_buffer();
     }
     buffer[i++] = c;
-  
+  return (0);
 }
 char* create_padding(int size, int zero_fill){
     char *padding = (char *)malloc(size*sizeof(char)) ;
     if (zero_fill)
     {
-        for (int i = 0; i < size - i; i++)
+        int i;
+        for (i=0 ;i < size - i; i++)
         {
             padding[i] = '0';
         }
     }
     else
     {
-        for (int i = 0; i < size ; i++)
+        for ( i = 0; i < size ; i++)
         {
             padding[i] = ' ';
         }

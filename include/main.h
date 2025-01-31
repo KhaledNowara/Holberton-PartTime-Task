@@ -20,25 +20,25 @@
 #define UINT_HEX_SHORT_MAX_DIGITS 4
 #define UINT_HEX_MAX_DIGITS 8
 #define UINT_HEX_LONG_MAX_DIGITS 16
-typedef enum {
-    NONE,  // No modifier
-    L,     // Long modifier
-    H      // Short modifier
+typedef enum
+{
+    NONE,
+    L,
+    H
 } len_modifier;
 
 int _printf(const char *format, ...);
 
-int print_char (char c);
-int print_string (char *str);
-int print_int (long int n, len_modifier modifier, int width, int zero_fill,int left_justified);
-int print_binary (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
-int print_unsigned_int (unsigned long int d, len_modifier modifier,int width, int zero_fill,int left_justified);
-int print_octal (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
-int print_hex_small (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
-int print_hex_capital (unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified);
+int print_char(char c);
+int print_string(char *str);
+int print_int(long int n, len_modifier modifier, int width, int zero_fill, int left_justified);
+int print_binary(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified);
+int print_unsigned_int(unsigned long int d, len_modifier modifier, int width, int zero_fill, int left_justified);
+int print_octal(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified);
+int print_hex_small(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified);
+int print_hex_capital(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified);
 
 int add_to_buffer(char c);
 int flush_buffer();
 
 #endif
-

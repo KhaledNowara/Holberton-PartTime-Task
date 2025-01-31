@@ -47,15 +47,14 @@ int reverse_and_pad(char *reverse_buffer, int i, int width, int zero_fill, int l
     return (0);
 }
 
-
 int print_char(char c)
 {
     if (c < 32 || c > 126)
     {
-
+        printf("%x\n", c);
         add_to_buffer('\\');
         add_to_buffer('x');
-        print_hex_small(c, NONE,0,1,1);
+        print_hex_capital(c, NONE, 0, 1, 1);
     }
     else
     {
@@ -70,29 +69,31 @@ int print_string(char *str)
 
     while (*str)
     {
-        printf("str: %c\n", *str);
+
         print_char(*str);
         str++;
     }
-    /*TODO: Handle non printable characters \x + character code*/
+    return (0);
 }
 
 /*handle %i %d print a signed integer*/
-int print_int(long int n, len_modifier modifier, int width, int zero_fill,int left_justified)
+int print_int(long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 {
     int buffer_size = INT_MAX_DIGITS;
-
+     char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
+        int i = 0;
     switch (modifier)
     {
+        /* cast n to required size, admittedly a waste of space  */
     case NONE:
-        (int)n;
+        n = (int)n;
         break;
     case L:
-        (long int)n;
+        n = (long int)n;
         buffer_size = INT_LONG_MAX_DIGITS;
         break;
     case H:
-        (short int)n;
+        n = (short int)n;
         buffer_size = INT_SHORT_MAX_DIGITS;
         break;
     default:
@@ -115,8 +116,7 @@ int print_int(long int n, len_modifier modifier, int width, int zero_fill,int le
         Add digits to a buffer and reverse the buffer
         */
 
-        char reverse_buffer[buffer_size];
-        int i = 0;
+  
         while (n > 0)
         {
             /*
@@ -125,13 +125,16 @@ int print_int(long int n, len_modifier modifier, int width, int zero_fill,int le
             reverse_buffer[i++] = n % 10 + '0';
             n = n / 10;
         }
-      
-        reverse_and_pad(reverse_buffer, i, width, zero_fill, 1);
+
+        reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+        free(reverse_buffer);
+        
     }
+    return (0);
 }
 
 /*handle %b print a binary unsigned int*/
-int print_binary(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
+int print_binary(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 
 {
     int buffer_size = UINT_BIN_MAX_DIGITS;
@@ -139,14 +142,14 @@ int print_binary(unsigned long int n, len_modifier modifier,int width, int zero_
     switch (modifier)
     {
     case NONE:
-        (unsigned int)n;
+        n = (unsigned int)n;
         break;
     case L:
-        (unsigned long int)n;
+       n =  (unsigned long int)n;
         buffer_size = UINT_BIN_LONG_MAX_DIGITS;
         break;
     case H:
-        (unsigned short int)n;
+       n =  (unsigned short int)n;
         buffer_size = UINT_BIN_SHORT_MAX_DIGITS;
         break;
     default:
@@ -158,9 +161,9 @@ int print_binary(unsigned long int n, len_modifier modifier,int width, int zero_
     }
     else
     {
-        // Max unsigned int is 2^32 , 32 digits 32 bits for binary
+        /* Max unsigned int is 2^32 , 32 digits 32 bits for binary*/
 
-        char reverse_buffer[buffer_size];
+       char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
         int i = 0;
 
         while (n > 0)
@@ -169,27 +172,31 @@ int print_binary(unsigned long int n, len_modifier modifier,int width, int zero_
             n = n / 2;
         }
         reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+        free(reverse_buffer);
+        
     }
+    return (0);
 }
 
 /*handle %u print unsigned int*/
-int print_unsigned_int(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
+int print_unsigned_int(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 {
     int buffer_size = INT_MAX_DIGITS;
-    switch(modifier){
-        case NONE:
-            (unsigned int)n;
-            break;
-        case L:
-            (unsigned long int)n;
-            buffer_size = INT_LONG_MAX_DIGITS;
-            break;
-        case H:
-            (unsigned short int)n;
-            buffer_size = INT_SHORT_MAX_DIGITS;
-            break;
-        default:
-            break;
+    switch (modifier)
+    {
+    case NONE:
+      n =   (unsigned int)n;
+        break;
+    case L:
+      n =   (unsigned long int)n;
+        buffer_size = INT_LONG_MAX_DIGITS;
+        break;
+    case H:
+      n =   (unsigned short int)n;
+        buffer_size = INT_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
     }
 
     if (n == 0)
@@ -203,7 +210,7 @@ int print_unsigned_int(unsigned long int n, len_modifier modifier,int width, int
         Add digits to a buffer and reverse the buffer
         */
 
-        char reverse_buffer[buffer_size];
+       char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
         int i = 0;
         while (n > 0)
         {
@@ -215,28 +222,32 @@ int print_unsigned_int(unsigned long int n, len_modifier modifier,int width, int
         }
 
         reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+        free(reverse_buffer);
+      
     }
+      return (0);
 }
 
 /*handle %o print octal unsigned int*/
 /* I am not sure why I am assuming %o is unsigned but the its consistent with printf*/
-int print_octal(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
+int print_octal(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 {
     int buffer_size = UINT_OCT_MAX_DIGITS;
-    switch(modifier){
-        case NONE:
-            (unsigned int)n;
-            break;
-        case L:
-            (unsigned long int)n;
-            buffer_size = UINT_OCT_LONG_MAX_DIGITS;
-            break;
-        case H:
-            (unsigned short int)n;
-            buffer_size = UINT_OCT_SHORT_MAX_DIGITS;
-            break;
-        default:
-            break;
+    switch (modifier)
+    {
+    case NONE:
+      n =   (unsigned int)n;
+        break;
+    case L:
+      n=  (unsigned long int)n;
+        buffer_size = UINT_OCT_LONG_MAX_DIGITS;
+        break;
+    case H:
+       n= (unsigned short int)n;
+        buffer_size = UINT_OCT_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
     }
     if (n == 0)
     {
@@ -245,7 +256,7 @@ int print_octal(unsigned long int n, len_modifier modifier,int width, int zero_f
     else
     {
 
-        char reverse_buffer[buffer_size];
+       char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
         int i = 0;
 
         while (n > 0)
@@ -254,6 +265,8 @@ int print_octal(unsigned long int n, len_modifier modifier,int width, int zero_f
             n = n / 8;
         }
         reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+        free(reverse_buffer);
+        
     }
     return (0);
 }
@@ -261,24 +274,25 @@ int print_octal(unsigned long int n, len_modifier modifier,int width, int zero_f
 /*handle %x print hexadecimal unsigned int*/
 /*Same signing issue*/
 
-int print_hex_small(unsigned long int n,len_modifier modifier,int width, int zero_fill,int left_justified)
+int print_hex_small(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 
 {
     int buffer_size = UINT_HEX_MAX_DIGITS;
-    switch(modifier){
-        case NONE:
-            (unsigned int)n;
-            break;
-        case L:
-            (unsigned long int)n;
-            buffer_size = UINT_HEX_LONG_MAX_DIGITS;
-            break;
-        case H:
-            (unsigned short int)n;
-            buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
-            break;
-        default:
-            break;
+    switch (modifier)
+    {
+    case NONE:
+    n =     (unsigned int)n;
+        break;
+    case L:
+    n =    (unsigned long int)n;
+        buffer_size = UINT_HEX_LONG_MAX_DIGITS;
+        break;
+    case H:
+      n =  (unsigned short int)n;
+        buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
     }
     if (n == 0)
     {
@@ -287,7 +301,7 @@ int print_hex_small(unsigned long int n,len_modifier modifier,int width, int zer
     else
     {
 
-        char reverse_buffer[buffer_size];
+       char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
         int i = 0;
 
         while (n > 0)
@@ -304,30 +318,32 @@ int print_hex_small(unsigned long int n,len_modifier modifier,int width, int zer
             n = n / 16;
         }
         reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+        free(reverse_buffer);
     }
 
     return (0);
 }
 
 /*handle %X print hexadecimal unsigned int*/
-int print_hex_capital(unsigned long int n, len_modifier modifier,int width, int zero_fill,int left_justified)
+int print_hex_capital(unsigned long int n, len_modifier modifier, int width, int zero_fill, int left_justified)
 
 {
     int buffer_size = UINT_HEX_MAX_DIGITS;
-    switch(modifier){
-        case NONE:
-            (unsigned int)n;
-            break;
-        case L:
-            (unsigned long int)n;
-            buffer_size = UINT_HEX_LONG_MAX_DIGITS;
-            break;
-        case H:
-            (unsigned short int)n;
-            buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
-            break;
-        default:
-            break;
+    switch (modifier)
+    {
+    case NONE:
+       n =  (unsigned int)n;
+        break;
+    case L:
+       n = (unsigned long int)n;
+        buffer_size = UINT_HEX_LONG_MAX_DIGITS;
+        break;
+    case H:
+     n =   (unsigned short int)n;
+        buffer_size = UINT_HEX_SHORT_MAX_DIGITS;
+        break;
+    default:
+        break;
     }
     if (n == 0)
     {
@@ -336,7 +352,7 @@ int print_hex_capital(unsigned long int n, len_modifier modifier,int width, int 
     else
     {
 
-        char reverse_buffer[buffer_size];
+        char *reverse_buffer = (char *)malloc(buffer_size * sizeof(char));
         int i = 0;
 
         while (n > 0)
@@ -353,6 +369,7 @@ int print_hex_capital(unsigned long int n, len_modifier modifier,int width, int 
             n = n / 16;
         }
         reverse_and_pad(reverse_buffer, i, width, zero_fill, left_justified);
+         free(reverse_buffer);  
     }
     return (0);
 }
