@@ -79,7 +79,7 @@ int _printf(const char *format, ...)
                 print_hex_small(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             case 'X':
-                print_hex_small(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
+                print_hex_capital(va_arg(args, long unsigned int), len_modifier, width, zero_fill, left_justified);
                 break;
             default:
                 /*offset for the %*/
@@ -100,6 +100,6 @@ int _printf(const char *format, ...)
     va_end(args);
     flush_buffer();
     /* should handle the old return types for the functions but I probably wont*/
-    
+
     return (printed_chars);
 }
