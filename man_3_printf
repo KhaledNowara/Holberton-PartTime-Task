@@ -1,0 +1,64 @@
+.\" Manpage for _printf
+.TH man 3 "31 Jan 2025" "1.0" "_printf man page"
+.SH NAME
+_printf Print formatted output 
+.SH DESCRIPTION 
+Custom printing function from scratch handling the following specifiers 
+%,c,s,d,i,b,u,o,x,X in addition to length modifiers , field with specifiers, and precision specifiers, in the following manner:
+.TP
+.B %c
+Prints a single character.
+.TP
+.B %s
+Prints a null-terminated string.
+.TP
+.B %d, %i
+Prints a signed integer.
+.B %b
+Prints an unsigned integer in binary notation.
+.TP
+.B %u
+Prints an unsigned integer.
+.TP
+.B %o
+Prints an unsigned integer in octal notation.
+.TP
+.B %x, %X
+Prints an unsigned integer in hexadecimal notation (lowercase and uppercase, respectively).
+.TP
+
+
+.PP
+The function also supports the following modifiers:
+
+.TP
+.B l
+Indicates that the argument is a long integer.
+.TP
+.B h
+Indicates that the argument is a short integer.
+.TP
+.B . or 0
+Specifies zero-padding for numeric output.
+.TP
+.B -
+Specifies left justification.
+.TP
+.B width
+A number specifying the minimum field width for the output.
+
+.SH RETURN VALUE
+The function returns the number of characters printed (excluding the null terminator).
+
+.SH COMPILATION
+This function should be compiled using GCC on an Ubuntu system following a strict adherence to the GNU89 maniac standard for C compilation. 
+The compiling command is 
+.B
+ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format -I./include *.c src/*.c   -o main
+which includes support for the layered architecture of this delicate function via the use of the cutting edge technology of folders. If you read this, make sure to add the src directory and include the header file to the compiling flag.
+.SH BUGS
+yes 
+.SH AUTHOR Khaled Nowara
+
+
+

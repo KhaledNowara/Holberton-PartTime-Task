@@ -6,8 +6,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-
+/*printing buffer size*/
 #define BUFFER_SIZE 1024
+
+/*Reversing buffer sizes, at some point a better implementation was in order but I was commited*/
 #define INT_MAX_DIGITS 10
 #define INT_LONG_MAX_DIGITS 20
 #define INT_SHORT_MAX_DIGITS 5
@@ -20,6 +22,8 @@
 #define UINT_HEX_SHORT_MAX_DIGITS 4
 #define UINT_HEX_MAX_DIGITS 8
 #define UINT_HEX_LONG_MAX_DIGITS 16
+
+/*handles the length specifiers*/
 typedef enum
 {
     NONE,
